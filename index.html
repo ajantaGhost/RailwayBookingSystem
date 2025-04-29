@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Railways Train Search</title>
+    <link rel="stylesheet" href="/asset/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span class="fa fa-train" style="font-size: 2rem;"></span>
+            <h1>Indian Railways Train Search</h1>
+        </div>
+        <p>Find and book trains across India</p>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <div class="search-heading">
+                <span class="fa fa-search"></span>
+                <h2>Search Trains</h2>
+            </div>
+            
+            <form id="search-form" class="search-form">
+                <div class="form-group">
+                    <label for="from-station">From Station</label>
+                    <div class="station-select">
+                        <input 
+                            type="text" 
+                            id="from-station" 
+                            name="from-station" 
+                            placeholder="Enter city or station code" 
+                            autocomplete="off" 
+                            required
+                        >
+                        <input type="hidden" id="from-station-code" name="from-station-code">
+                        <div class="station-suggestions" id="from-suggestions"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="to-station">To Station</label>
+                    <div class="station-select">
+                        <input 
+                            type="text" 
+                            id="to-station" 
+                            name="to-station" 
+                            placeholder="Enter city or station code" 
+                            autocomplete="off" 
+                            required
+                        >
+                        <input type="hidden" id="to-station-code" name="to-station-code">
+                        <div class="station-suggestions" id="to-suggestions"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="journey-date">Journey Date</label>
+                    <input 
+                        type="date" 
+                        id="journey-date" 
+                        name="journey-date" 
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="quota">Quota</label>
+                    <select id="quota" name="quota">
+                        <option value="GN">General Quota</option>
+                        <option value="LD">Ladies Quota</option>
+                        <option value="HO">Head Quarters/High Official Quota</option>
+                        <option value="DF">Defence Quota</option>
+                        <option value="PH">Physically Handicapped Quota</option>
+                        <option value="FT">Foreign Tourist Quota</option>
+                        <option value="SS">Senior Citizen Quota</option>
+                        <option value="YU">Yuva Quota</option>
+                        <option value="DP">Duty Pass Quota</option>
+                        <option value="TQ">Tatkal Quota</option>
+                        <option value="PT">Premium Tatkal Quota</option>
+                    </select>
+                </div>
+                
+                <div class="buttons-container">
+                    <button type="button" id="swap-btn" class="btn btn-outline">
+                        <span class="fa fa-exchange"></span> Swap
+                    </button>
+                    <button type="submit" id="search-btn" class="btn btn-primary">
+                        <span class="fa fa-search"></span> Search Trains
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="results-container">
+            <div id="results-content">
+                <div class="no-results">
+                    <span class="fa fa-train" style="font-size: 3rem;"></span>
+                    <h3>Search for Trains</h3>
+                    <p>Enter your journey details above to find available trains</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/asset/js/script.js"></script>
+</body>
+</html>

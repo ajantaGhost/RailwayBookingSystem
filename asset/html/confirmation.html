@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Railways - Booking Confirmation</title>
+    <link rel="stylesheet" href="/asset/css/confirmation.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../images/indian-railways-logo.png" alt="Indian Railways Logo">
+                    <h1>Indian Railways</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">PNR Status</a></li>
+                        <li><a href="#">Train Schedule</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <a href="#" class="btn login-btn">Login</a>
+                    <a href="#" class="btn register-btn">Register</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="confirmation-container">
+                <div class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Booking Successful!</h2>
+                    <p>Your train ticket has been booked successfully. Below is your e-ticket.</p>
+                    <div class="pnr-container">
+                        <span>PNR Number:</span>
+                        <span id="pnr-number" class="pnr">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="ticket-actions">
+                    <button id="download-btn" class="btn download-btn">
+                        <i class="fas fa-download"></i> Download Ticket
+                    </button>
+                    <button id="print-btn" class="btn print-btn">
+                        <i class="fas fa-print"></i> Print Ticket
+                    </button>
+                    <button id="email-btn" class="btn email-btn">
+                        <i class="fas fa-envelope"></i> Email Ticket
+                    </button>
+                </div>
+
+                <div id="ticket" class="ticket">
+                    <div class="ticket-header">
+                        <div class="ticket-logo">
+                            <img src="../images/indian-railways-logo.png" alt="Indian Railways Logo">
+                            <h3>Indian Railways</h3>
+                        </div>
+                        <div class="ticket-type">
+                            <h3>E-TICKET</h3>
+                            <p id="booking-date">Date: Loading...</p>
+                        </div>
+                    </div>
+
+                    <div class="ticket-details">
+                        <div class="ticket-info">
+                            <div class="train-info">
+                                <h4>Train Details</h4>
+                                <div class="info-row">
+                                    <div class="info-item">
+                                        <span class="label">Train Name:</span>
+                                        <span id="train-name" class="value">Loading...</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">Train Number:</span>
+                                        <span id="train-number" class="value">Loading...</span>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-item">
+                                        <span class="label">Class:</span>
+                                        <span id="train-class" class="value">Loading...</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">Quota:</span>
+                                        <span id="train-quota" class="value">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="journey-details">
+                                <h4>Journey Details</h4>
+                                <div class="journey-stations">
+                                    <div class="station from">
+                                        <div class="station-name">
+                                            <span class="label">From:</span>
+                                            <span id="from-station" class="value">Loading...</span>
+                                        </div>
+                                        <div class="station-time">
+                                            <span class="label">Departure:</span>
+                                            <span id="departure-time" class="value">Loading...</span>
+                                        </div>
+                                        <div class="station-date">
+                                            <span class="label">Date:</span>
+                                            <span id="departure-date" class="value">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <div class="journey-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                    <div class="station to">
+                                        <div class="station-name">
+                                            <span class="label">To:</span>
+                                            <span id="to-station" class="value">Loading...</span>
+                                        </div>
+                                        <div class="station-time">
+                                            <span class="label">Arrival:</span>
+                                            <span id="arrival-time" class="value">Loading...</span>
+                                        </div>
+                                        <div class="station-date">
+                                            <span class="label">Date:</span>
+                                            <span id="arrival-date" class="value">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="passenger-details">
+                                <h4>Passenger Details</h4>
+                                <table class="passenger-table">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                            <th>Status</th>
+                                            <th>Coach</th>
+                                            <th>Seat/Berth</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="passenger-list">
+                                        <!-- Passengers will be added here dynamically -->
+                                        <tr>
+                                            <td colspan="7" class="loading-text">Loading passenger details...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="fare-details">
+                                <h4>Fare Details</h4>
+                                <div class="fare-item">
+                                    <span class="label">Base Fare:</span>
+                                    <span id="base-fare" class="value">Loading...</span>
+                                </div>
+                                <div class="fare-item">
+                                    <span class="label">Reservation Charges:</span>
+                                    <span id="reservation-charges" class="value">Loading...</span>
+                                </div>
+                                <div class="fare-item">
+                                    <span class="label">GST:</span>
+                                    <span id="gst" class="value">Loading...</span>
+                                </div>
+                                <div class="fare-item total">
+                                    <span class="label">Total Amount:</span>
+                                    <span id="total-amount" class="value">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ticket-footer">
+                        <div class="barcode">
+                            <div class="barcode-image">
+                                <!-- Simple barcode representation -->
+                                <div class="barcode-lines"></div>
+                            </div>
+                            <div class="pnr-display">
+                                <span id="pnr-display">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="important-info">
+                            <p><strong>Important:</strong> This e-ticket is valid along with a government-issued photo ID. Please carry the ID during your journey.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-actions">
+                    <h3>What's Next?</h3>
+                    <div class="action-cards">
+                        <div class="action-card">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h4>Track Your Train</h4>
+                            <p>Stay updated with the real-time status of your train.</p>
+                            <a href="#" class="btn track-btn">Track Now</a>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-utensils"></i>
+                            <h4>Order Food</h4>
+                            <p>Order your favorite meals for your journey.</p>
+                            <a href="#" class="btn food-btn">Order Now</a>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-taxi"></i>
+                            <h4>Book Cab</h4>
+                            <p>Book a cab for your arrival station.</p>
+                            <a href="#" class="btn cab-btn">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="back-to-home">
+                    <a href="index.html" class="btn home-btn">Back to Home</a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Train Search</a></li>
+                        <li><a href="#">PNR Status</a></li>
+                        <li><a href="#">Train Schedule</a></li>
+                        <li><a href="#">Cancellations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Help & Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Rules & Regulations</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p>Customer Care: 1800-111-139</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Indian Railways. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/asset/js/confirmation.js"></script>
+</body>
+</html>

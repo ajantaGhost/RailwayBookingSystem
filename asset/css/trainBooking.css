@@ -1,0 +1,599 @@
+/* Global Styles */
+:root {
+    --primary-color: #003366;
+    --secondary-color: #ff6600;
+    --light-color: #f4f7fb;
+    --dark-color: #333;
+    --gray-color: #6c757d;
+    --light-gray: #e9ecef;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --border-radius: 4px;
+    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: #f9f9f9;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: none;
+}
+
+/* Header Styles */
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--secondary-color);
+}
+
+.user-actions {
+    display: flex;
+}
+
+.login-btn, .register-btn {
+    margin-left: 10px;
+}
+
+.login-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.register-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.register-btn:hover {
+    background-color: #e65c00;
+}
+
+/* Main Content Styles */
+main {
+    padding: 40px 0;
+}
+
+.booking-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+/* Train Info Styles */
+.train-info {
+    background-color: var(--light-color);
+    padding: 25px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.train-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.train-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.train-number {
+    font-size: 1rem;
+    color: var(--gray-color);
+    font-weight: 500;
+}
+
+.journey-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.from-station, .to-station {
+    flex: 1;
+}
+
+.from-station h3, .to-station h3 {
+    font-size: 1.1rem;
+    color: var(--gray-color);
+    margin-bottom: 10px;
+}
+
+.from-station p, .to-station p {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.from-station p:first-of-type, .to-station p:first-of-type {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.journey-meta {
+    flex: 1;
+    padding: 0 30px;
+}
+
+.journey-line {
+    position: relative;
+    height: 4px;
+    background-color: var(--secondary-color);
+    margin: 30px 0;
+}
+
+.dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dot.start {
+    left: -6px;
+}
+
+.dot.end {
+    right: -6px;
+}
+
+/* Booking Form Styles */
+.booking-form-container {
+    padding: 30px;
+}
+
+.booking-form-container h2 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.form-section h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+/* Class Options Styles */
+.class-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.class-option {
+    border: 2px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 150px;
+}
+
+.class-option:hover {
+    border-color: var(--primary-color);
+}
+
+.class-option.selected {
+    border-color: var(--secondary-color);
+    background-color: rgba(255, 102, 0, 0.05);
+}
+
+.class-option h4 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.class-option .availability {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.class-option .availability.available {
+    color: var(--success-color);
+}
+
+.class-option .availability.waiting {
+    color: var(--warning-color);
+}
+
+.class-option .availability.not-available {
+    color: var(--danger-color);
+}
+
+.class-option .fare {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+/* Passenger Form Styles */
+.passenger-list {
+    margin-bottom: 20px;
+}
+
+.passenger-item {
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.passenger-item h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remove-passenger {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input {
+    width: auto;
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+}
+
+.add-passenger {
+    margin-top: 20px;
+}
+
+#add-passenger-btn {
+    background-color: transparent;
+    border: 1px dashed var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#add-passenger-btn:hover {
+    background-color: rgba(0, 51, 102, 0.05);
+}
+
+.passenger-limit {
+    font-size: 0.85rem;
+    color: var(--gray-color);
+    margin-top: 8px;
+}
+
+/* Fare Details Styles */
+.fare-details {
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+}
+
+.fare-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.fare-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.fare-item.total {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    border-top: 1px solid #d0d0d0;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-bottom: none;
+}
+
+/* Terms Section Styles */
+.terms-section {
+    border-bottom: none;
+}
+
+.terms-section a {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Form Actions Styles */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.back-btn {
+    background-color: var(--light-gray);
+    color: var(--dark-color);
+}
+
+.back-btn:hover {
+    background-color: #dfe4e9;
+}
+
+.proceed-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 25px;
+    font-weight: 600;
+}
+
+.proceed-btn:hover {
+    background-color: #e65c00;
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 40px 0 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--secondary-color);
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a:hover {
+    color: var(--secondary-color);
+}
+
+.social-links {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: var(--secondary-color);
+}
+
+.footer-bottom {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .journey-details {
+        flex-direction: column;
+    }
+    
+    .journey-meta {
+        margin: 20px 0;
+        width: 100%;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .back-btn {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+    }
+    
+    .logo {
+        margin-bottom: 15px;
+    }
+    
+    nav {
+        margin-bottom: 15px;
+    }
+    
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    nav ul li {
+        margin: 5px 10px;
+    }
+    
+    .class-options {
+        flex-direction: column;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .train-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .train-number {
+        margin-top: 5px;
+    }
+}

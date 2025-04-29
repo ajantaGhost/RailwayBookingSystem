@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Railways - Train Booking</title>
+    <link rel="stylesheet" href="/asset/css/trainBooking.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../images/indian-railways-logo.png" alt="Indian Railways Logo">
+                    <h1>Indian Railways</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">PNR Status</a></li>
+                        <li><a href="#">Train Schedule</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <a href="#" class="btn login-btn">Login</a>
+                    <a href="#" class="btn register-btn">Register</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="booking-container">
+                <div class="train-info">
+                    <div class="train-header">
+                        <h2 id="train-name">Loading...</h2>
+                        <p class="train-number" id="train-number">#Loading...</p>
+                    </div>
+                    
+                    <div class="journey-details">
+                        <div class="from-station">
+                            <h3>From</h3>
+                            <p id="from-station">Loading...</p>
+                            <p id="departure-time">Loading...</p>
+                            <p id="departure-date">Loading...</p>
+                        </div>
+                        
+                        <div class="journey-meta">
+                            <div class="journey-line">
+                                <span class="dot start"></span>
+                                <span class="line"></span>
+                                <span class="dot end"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="to-station">
+                            <h3>To</h3>
+                            <p id="to-station">Loading...</p>
+                            <p id="arrival-time">Loading...</p>
+                            <p id="arrival-date">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-form-container">
+                    <h2>Passenger Details</h2>
+                    <form id="booking-form">
+                        <div class="form-section">
+                            <h3>Select Class</h3>
+                            <div class="class-options" id="class-options">
+                                <!-- Class options will be dynamically generated -->
+                                <p>Loading available classes...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>Add Passengers</h3>
+                            <div class="passenger-list" id="passenger-list">
+                                <!-- First passenger is always required -->
+                                <div class="passenger-item" data-passenger-id="1">
+                                    <h4>Passenger 1</h4>
+                                    <div class="form-group">
+                                        <label for="name-1">Name</label>
+                                        <input type="text" id="name-1" name="name-1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="age-1">Age</label>
+                                        <input type="number" id="age-1" name="age-1" min="1" max="120" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gender-1">Gender</label>
+                                        <select id="gender-1" name="gender-1" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="berth-1">Berth Preference</label>
+                                        <select id="berth-1" name="berth-1">
+                                            <option value="no-preference">No Preference</option>
+                                            <option value="lower">Lower</option>
+                                            <option value="middle">Middle</option>
+                                            <option value="upper">Upper</option>
+                                            <option value="side-lower">Side Lower</option>
+                                            <option value="side-upper">Side Upper</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group checkbox-group">
+                                        <input type="checkbox" id="senior-1" name="senior-1">
+                                        <label for="senior-1">Senior Citizen</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="add-passenger">
+                                <button type="button" id="add-passenger-btn">+ Add Passenger</button>
+                                <p class="passenger-limit">Maximum 6 passengers allowed</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>Contact Information</h3>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Mobile Number</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="sms-updates" name="sms-updates" checked>
+                                <label for="sms-updates">Send booking updates via SMS</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>Payment Summary</h3>
+                            <div class="fare-details">
+                                <div class="fare-item">
+                                    <span>Base Fare</span>
+                                    <span id="base-fare">₹0</span>
+                                </div>
+                                <div class="fare-item">
+                                    <span>Reservation Charges</span>
+                                    <span id="reservation-charges">₹0</span>
+                                </div>
+                                <div class="fare-item">
+                                    <span>GST</span>
+                                    <span id="gst">₹0</span>
+                                </div>
+                                <div class="fare-item total">
+                                    <span>Total Amount</span>
+                                    <span id="total-amount">₹0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section terms-section">
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">I accept the <a href="#">Terms and Conditions</a> and <a href="#">Cancellation Policy</a></label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" id="back-btn" class="btn back-btn">Back to Search</button>
+                            <button type="submit" id="proceed-btn" class="btn proceed-btn">Proceed to Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Train Search</a></li>
+                        <li><a href="#">PNR Status</a></li>
+                        <li><a href="#">Train Schedule</a></li>
+                        <li><a href="#">Cancellations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Help & Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Rules & Regulations</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p>Customer Care: 1800-111-139</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Indian Railways. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/asset/js/trainBooking.js"></script>
+</body>
+</html>
