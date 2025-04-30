@@ -378,9 +378,28 @@ function handleBookingSubmit(event) {
     // Get form data
     const formData = new FormData(bookingForm);
     const bookingData = {
-        train: trainData,
-        class: selectedClass,
+        // Train data
+        trainNumber: trainData.trainNumber,
+        trainName: trainData.trainName,
+        fromStation: trainData.fromStation,
+        toStation: trainData.toStation,
+        departureDate: trainData.journeyDate,
+        arrivalDate: calculateArrivalDate(trainData.journeyDate, parseInt(trainData.arrivalDay)),
+        departureTime: trainData.departureTime,
+        arrivalTime: trainData.arrivalTime,
+        
+        // Selected class
+        trainClass: selectedClass.code,
+        trainQuota: trainData.quota || 'GN',
+        
+        // Booking details
+        pnr: generateRandomPNR(),
+        bookingDate: formatDate(new Date()),
+        
+        // Passenger information
         passengers: [],
+        
+        // Contact information
         contact: {
             email: formData.get('email'),
             phone: formData.get('phone'),
@@ -395,7 +414,9 @@ function handleBookingSubmit(event) {
             age: formData.get(`age-${i}`),
             gender: formData.get(`gender-${i}`),
             berthPreference: formData.get(`berth-${i}`),
-            seniorCitizen: formData.get(`senior-${i}`) === 'on'
+            seniorCitizen: formData.get(`senior-${i}`) === 'on',
+            seatNumber: generateRandomSeatNumber(selectedClass.code),
+            status: 'Confirmed'
         });
     }
     
@@ -405,23 +426,62 @@ function handleBookingSubmit(event) {
     const gst = Math.ceil(baseFare * 0.05);
     const totalAmount = baseFare + reservationCharge + gst;
     
-    bookingData.fare = {
-        baseFare,
-        reservationCharge,
-        gst,
-        totalAmount
-    };
+    // Add fare details
+    bookingData.baseFare = baseFare.toFixed(2);
+    bookingData.reservationCharges = reservationCharge.toFixed(2);
+    bookingData.gst = gst.toFixed(2);
+    bookingData.totalAmount = totalAmount.toFixed(2);
     
     // In a real app, we would send this data to the server
     console.log('Booking data:', bookingData);
     
-    // For demo purposes, store in localStorage and redirect to payment page
-    localStorage.setItem('bookingData', JSON.stringify(bookingData));
+    // Store in sessionStorage (not localStorage) for confirmation page
+    sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
     
     // Show confirmation before redirecting
-   // Show confirmation before redirecting
-if (confirm(`Proceed to payment for ₹${totalAmount}?`)) {
-    // Redirect to confirmation page
-    window.location.href = '/asset/html/confirmation.html';
+    if (confirm(`Proceed to payment for ₹${totalAmount}?`)) {
+        // Redirect to confirmation page
+        window.location.href = '/asset/html/confirmation.html';
+    }
 }
+
+// Generate a random PNR number
+function generateRandomPNR() {
+    return '2' + Math.floor(Math.random() * 9000000000 + 1000000000);
+}
+
+// Generate a random seat number based on class
+function generateRandomSeatNumber(classCode) {
+    let prefix = '';
+    let maxSeatNum = 72;
+    
+    switch(classCode) {
+        case 'SL':
+            prefix = 'S';
+            maxSeatNum = 72;
+            break;
+        case '3A':
+            prefix = 'B';
+            maxSeatNum = 64;
+            break;
+        case '2A':
+            prefix = 'A';
+            maxSeatNum = 48;
+            break;
+        case '1A':
+            prefix = 'H';
+            maxSeatNum = 24;
+            break;
+        default:
+            prefix = 'S';
+            maxSeatNum = 72;
+    }
+    
+    // Generate random coach number (1-10)
+    const coachNum = Math.floor(Math.random() * 10) + 1;
+    
+    // Generate random seat number
+    const seatNum = Math.floor(Math.random() * maxSeatNum) + 1;
+    
+    return `${prefix}${coachNum}-${seatNum}`;
 }

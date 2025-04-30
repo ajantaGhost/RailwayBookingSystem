@@ -83,94 +83,56 @@ function calculateTotalFare(baseFare, reservationCharges, gst) {
     return parseFloat(baseFare) + parseFloat(reservationCharges) + parseFloat(gst);
 }
 
-// Function to populate ticket details from URL parameters or session storage
+// Function to populate ticket details from session storage
 function populateTicketDetails() {
-    // Check if we have data in session storage (from the booking page)
-    const bookingData = JSON.parse(sessionStorage.getItem('bookingData')) || {};
+    // Get the booking data from session storage
+    const storedData = sessionStorage.getItem('bookingData');
     
-    // If no data in session storage, try to get from URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
+    if (!storedData) {
+        console.error('No booking data found in session storage');
+        return;
+    }
     
-    // Generate a PNR if not available
-    const pnr = bookingData.pnr || urlParams.get('pnr') || generateRandomPNR();
+    // Parse the booking data
+    const bookingData = JSON.parse(storedData);
+    console.log('Retrieved booking data:', bookingData);
     
-    // Set booking date as today if not available
-    const bookingDate = bookingData.bookingDate || urlParams.get('bookingDate') || formatDate(new Date());
+    // Update PNR and booking information
+    pnrNumberElement.textContent = bookingData.pnr;
+    pnrDisplayElement.textContent = bookingData.pnr;
+    bookingDateElement.textContent = bookingData.bookingDate;
     
-    // Get train information
-    const trainNumber = bookingData.trainNumber || urlParams.get('trainNumber') || '12301';
-    const trainName = bookingData.trainName || urlParams.get('trainName') || getTrainNameByNumber(trainNumber);
-    const trainClass = bookingData.trainClass || urlParams.get('trainClass') || '2A';
-    const trainQuota = bookingData.trainQuota || urlParams.get('trainQuota') || 'GN';
+    // Update train information
+    trainNameElement.textContent = bookingData.trainName;
+    trainNumberElement.textContent = bookingData.trainNumber;
+    trainClassElement.textContent = bookingData.trainClass;
+    trainQuotaElement.textContent = bookingData.trainQuota;
     
     // Get station information
-    const fromCode = bookingData.fromStation || urlParams.get('fromStation') || 'NDLS';
-    const toCode = bookingData.toStation || urlParams.get('toStation') || 'HWH';
+    const fromCode = bookingData.fromStation;
+    const toCode = bookingData.toStation;
     const fromStation = getStationNameByCode(fromCode);
     const toStation = getStationNameByCode(toCode);
     
-    // Get departure and arrival information
-    const departureDate = bookingData.departureDate || urlParams.get('departureDate') || formatDate(new Date());
-    const arrivalDate = bookingData.arrivalDate || urlParams.get('arrivalDate') || formatDate(new Date(Date.now() + 86400000)); // Next day by default
-    const departureTime = bookingData.departureTime || urlParams.get('departureTime') || '06:00';
-    const arrivalTime = bookingData.arrivalTime || urlParams.get('arrivalTime') || '08:30';
-    
-    // Get passenger information
-    let passengers = bookingData.passengers || [];
-    if (passengers.length === 0 && urlParams.has('passengerCount')) {
-        const count = parseInt(urlParams.get('passengerCount')) || 1;
-        for (let i = 0; i < count; i++) {
-            passengers.push({
-                name: urlParams.get(`passengerName${i}`) || `Passenger ${i+1}`,
-                age: urlParams.get(`passengerAge${i}`) || Math.floor(Math.random() * 60 + 18),
-                gender: urlParams.get(`passengerGender${i}`) || (Math.random() > 0.5 ? 'Male' : 'Female'),
-                seatNumber: urlParams.get(`passengerSeat${i}`) || `${String.fromCharCode(65 + Math.floor(Math.random() * 8))}${Math.floor(Math.random() * 72 + 1)}`,
-                status: urlParams.get(`passengerStatus${i}`) || 'Confirmed'
-            });
-        }
-    }
-    
-    // If still no passengers, add a default one
-    if (passengers.length === 0) {
-        passengers.push({
-            name: 'John Doe',
-            age: 30,
-            gender: 'Male',
-            seatNumber: 'B22',
-            status: 'Confirmed'
-        });
-    }
-    
-    // Get fare information
-    const baseFare = bookingData.baseFare || urlParams.get('baseFare') || '1250.00';
-    const reservationCharges = bookingData.reservationCharges || urlParams.get('reservationCharges') || '40.00';
-    const gst = bookingData.gst || urlParams.get('gst') || '65.00';
-    const totalAmount = calculateTotalFare(baseFare, reservationCharges, gst);
-    
-    // Update DOM elements
-    pnrNumberElement.textContent = pnr;
-    pnrDisplayElement.textContent = pnr;
-    bookingDateElement.textContent = bookingDate;
-    trainNameElement.textContent = trainName;
-    trainNumberElement.textContent = trainNumber;
-    trainClassElement.textContent = trainClass;
-    trainQuotaElement.textContent = trainQuota;
+    // Update station information
     fromStationElement.textContent = `${fromStation} (${fromCode})`;
     toStationElement.textContent = `${toStation} (${toCode})`;
-    departureTimeElement.textContent = departureTime;
-    arrivalTimeElement.textContent = arrivalTime;
-    departureDateElement.textContent = departureDate;
-    arrivalDateElement.textContent = arrivalDate;
+    
+    // Update times and dates
+    departureTimeElement.textContent = formatTimeFromString(bookingData.departureTime);
+    arrivalTimeElement.textContent = formatTimeFromString(bookingData.arrivalTime);
+    departureDateElement.textContent = bookingData.departureDate;
+    arrivalDateElement.textContent = bookingData.arrivalDate;
     
     // Update fare information
-    baseFareElement.textContent = `₹${baseFare}`;
-    reservationChargesElement.textContent = `₹${reservationCharges}`;
-    gstElement.textContent = `₹${gst}`;
-    totalAmountElement.textContent = `₹${totalAmount.toFixed(2)}`;
+    baseFareElement.textContent = `₹${bookingData.baseFare}`;
+    reservationChargesElement.textContent = `₹${bookingData.reservationCharges}`;
+    gstElement.textContent = `₹${bookingData.gst}`;
+    totalAmountElement.textContent = `₹${bookingData.totalAmount}`;
     
     // Update passenger list
     passengerListElement.innerHTML = '';
-    passengers.forEach((passenger, index) => {
+    bookingData.passengers.forEach((passenger, index) => {
         const passengerRow = document.createElement('tr');
         passengerRow.innerHTML = `
             <td>${index + 1}</td>
@@ -185,24 +147,40 @@ function populateTicketDetails() {
     
     // Save ticket data for download/print/email functions
     window.ticketData = {
-        pnr,
-        bookingDate,
-        trainNumber,
-        trainName,
-        trainClass,
-        trainQuota,
+        pnr: bookingData.pnr,
+        bookingDate: bookingData.bookingDate,
+        trainNumber: bookingData.trainNumber,
+        trainName: bookingData.trainName,
+        trainClass: bookingData.trainClass,
+        trainQuota: bookingData.trainQuota,
         fromStation: `${fromStation} (${fromCode})`,
         toStation: `${toStation} (${toCode})`,
-        departureTime,
-        arrivalTime,
-        departureDate,
-        arrivalDate,
-        passengers,
-        baseFare,
-        reservationCharges,
-        gst,
-        totalAmount: totalAmount.toFixed(2)
+        departureTime: formatTimeFromString(bookingData.departureTime),
+        arrivalTime: formatTimeFromString(bookingData.arrivalTime),
+        departureDate: bookingData.departureDate,
+        arrivalDate: bookingData.arrivalDate,
+        passengers: bookingData.passengers,
+        baseFare: bookingData.baseFare,
+        reservationCharges: bookingData.reservationCharges,
+        gst: bookingData.gst,
+        totalAmount: bookingData.totalAmount
     };
+}
+
+// Format time from string (converts "HH:MM" to "HH:MM AM/PM")
+function formatTimeFromString(timeString) {
+    if (!timeString) return 'Unknown';
+    
+    // Replace URL-encoded colon if present
+    timeString = timeString.replace('%3A', ':');
+    
+    let [hours, minutes] = timeString.split(':');
+    hours = parseInt(hours);
+    
+    const amPm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+    
+    return `${hours}:${minutes} ${amPm}`;
 }
 
 // Download ticket as PDF
